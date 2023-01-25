@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import Dashboard from "./pages/Dashboard";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+import WorkoutPage from "./pages/Workout";
+
+export default function App() {
+  return (<>
+    <ToastContainer />
+    <BrowserRouter>
+      <Routes>
+        {/* <Route path="/auth" element={}/> */}
+        {/* <Route path="/enroll" element={}/> */}
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="workout" element={<WorkoutPage />} />
+          {/* <Route path="profile" element={< />} /> */}
+          <Route index path="*" element={<WorkoutPage />} />
+        </Route>
+
+
+      </Routes>
+    </BrowserRouter>
+  </>
   );
 }
 
-export default App;
+// function ProtectedRouteGuard({ children }) {
+//   const token = useToken();
+
+//   if (!token) {
+//     return <Navigate to="/sign-in" />;
+//   }
+
+//   return <>
+//     {children}
+//   </>;
+// }
