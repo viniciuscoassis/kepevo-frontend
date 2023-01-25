@@ -14,8 +14,8 @@ export default function NavigationButton({
 }
 
 const Button = styled.button`
-  width: 100%;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border: none;
   cursor: pointer;
   display: flex;

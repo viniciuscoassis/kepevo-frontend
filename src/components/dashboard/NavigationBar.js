@@ -12,17 +12,17 @@ export default function NavigationBar() {
         <Wrapper>
             <Link to="/dashboard/home">
                 <NavigationButton active={active} type="home" setActive={setActive}>
-                    {active === "home" ? <IoHomeOutline size={50} color="FABB73" /> : <IoHomeOutline size={50} />}
+                    <IoHomeOutline size={35} color={active === "home" ? "FABB73" : ""} />
                 </NavigationButton>
             </Link>
             <Link to="/dashboard/workout">
                 <NavigationButton active={active} type="workout" setActive={setActive}>
-                    {active === "workout" ? <IoBarbell size={50} color="FABB73" /> : <IoBarbell size={50} />}
+                    <IoBarbell size={35} color={active === "workout" ? "FABB73" : ""} />
                 </NavigationButton>
             </Link>
             <Link to="/dashboard/settings">
                 <NavigationButton active={active} type="settings" setActive={setActive}>
-                    {active === "settings" ? <IoSettingsOutline size={50} color="FABB73" /> : <IoSettingsOutline size={50} />}
+                    <IoSettingsOutline size={35} color={active === "settings" ? "FABB73" : ""} />
                 </NavigationButton>
             </Link>
         </Wrapper>
@@ -32,7 +32,7 @@ export default function NavigationBar() {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 
   width: 90vw;
   height: 80px;
