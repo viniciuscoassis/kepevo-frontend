@@ -38,7 +38,7 @@ export default function WorkoutPage() {
       </div>
       <div>
         {exercises?.map((value, index) => (
-          <Exercise key={index} name={value.name} />
+          <Exercise key={index} value={value} />
         ))}
       </div>
       {exercises.length === 0 ? (
