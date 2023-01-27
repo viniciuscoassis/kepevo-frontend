@@ -5,3 +5,5 @@ const options = [
   { value: "treinoD", label: "Treino D" },
   { value: "treinoE", label: "Treino E" },
 ];
+
+export { options };

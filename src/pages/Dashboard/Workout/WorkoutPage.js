@@ -4,6 +4,7 @@ import DefaultButton from "../../../components/DefaultButton";
 import useGetWorkout from "../../../hooks/api/useGetWorkout";
 import Select from "react-select";
 import Exercise from "../../../components/Dashboard/Workout/ExerciseDisplay";
+import * as data from "../../../assets/data/usefulData";
 
 export default function WorkoutPage() {
   const { getgetWorkOut } = useGetWorkout();
@@ -15,11 +16,6 @@ export default function WorkoutPage() {
     setWorkouts(workouts);
     console.log(workouts);
   };
-
-  const options = [
-    { value: "treinoA", label: "Treino A" },
-    { value: "treinoB", label: "Treino B" },
-  ];
 
   const handleSelection = (e) => {
     workouts.map((value) =>
@@ -33,9 +29,9 @@ export default function WorkoutPage() {
 
   return (
     <Wrapper>
-      <div className="header">
+      <div>
         {workouts ? (
-          <Select options={options} onChange={handleSelection} />
+          <Select options={data.options} onChange={handleSelection} />
         ) : (
           <p>Você ainda não tem exercícios para esteg treino</p>
         )}
@@ -51,6 +47,8 @@ export default function WorkoutPage() {
 }
 
 const Wrapper = styled.div`
+  background-color: red;
+  min-height: 75vh;
   .header {
     font-size: 1rem;
   }
