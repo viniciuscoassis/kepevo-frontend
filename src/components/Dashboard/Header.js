@@ -11,7 +11,6 @@ export default function Header() {
                 <img src={logo} alt="logotipo" /> </div>
             <div className="right">
                 <HiOutlineBellAlert size={25} /> </div>
-
         </Wrapper>
     )
 }
