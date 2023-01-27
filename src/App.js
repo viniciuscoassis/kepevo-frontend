@@ -1,8 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Dashboard/Home/HomePage";
+import SettingsPage from "./pages/Dashboard/Settings/SettingsPage";
 
-import WorkoutPage from "./pages/Workout";
+import WorkoutPage from "./pages/Dashboard/Workout/WorkoutPage";
 
 export default function App() {
   return (<>
@@ -13,7 +15,8 @@ export default function App() {
         {/* <Route path="/enroll" element={}/> */}
         <Route path="/dashboard" element={<Dashboard />}>
           <Route path="workout" element={<WorkoutPage />} />
-          {/* <Route path="profile" element={< />} /> */}
+          <Route path="settings" element={<SettingsPage />} />
+          <Route path="home" element={<Home />} />
           <Route index path="*" element={<WorkoutPage />} />
         </Route>
 

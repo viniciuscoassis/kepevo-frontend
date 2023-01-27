@@ -1,13 +1,15 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components"
-import NavigationBar from "../../components/dashboard/NavigationBar";
+import Header from "../../components/Dashboard/Header";
+import NavigationBar from "../../components/Navbar/NavigationBar";
 
 export default function Dashboard() {
-    return (
-        <Wrapper>
-            <NavigationBar />
-            <Outlet />
-        </Wrapper>)
+  return (
+    <Wrapper>
+      <Header />
+      <NavigationBar />
+      <Outlet />
+    </Wrapper>)
 }
 
 const Wrapper = styled.div`
