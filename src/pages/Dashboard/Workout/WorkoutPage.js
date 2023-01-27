@@ -33,23 +33,33 @@ export default function WorkoutPage() {
         {workouts ? (
           <Select options={data.options} onChange={handleSelection} />
         ) : (
-          <p>Você ainda não tem exercícios para esteg treino</p>
+          <p>Você ainda não tem treinos</p>
         )}
       </div>
       <div>
-        {exercises.map((value, index) => (
+        {exercises?.map((value, index) => (
           <Exercise key={index} name={value.name} />
         ))}
       </div>
+      {exercises.length === 0 ? (
+        <p className="warning">
+          Você ainda não tem exercícios para este treino, adicione!
+        </p>
+      ) : (
+        ""
+      )}
       <DefaultButton>Add Exercise</DefaultButton>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  background-color: red;
   min-height: 75vh;
-  .header {
+  max-height: 75vh;
+  overflow-y: scroll;
+  .warning {
     font-size: 1rem;
+    margin: 25vh 0;
+    text-align: center;
   }
 `;
