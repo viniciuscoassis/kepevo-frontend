@@ -1,30 +1,55 @@
+import { IoBarbell } from "react-icons/io5";
 import styled from "styled-components";
 
 export default function Exercise({ value }) {
   return (
     <Wrapper>
-      <div className="left">CHEST</div>
+      <div className="left">{value.MuscleGroups.name.toUpperCase()} </div>
+      <div>|</div>
       <div className="middle"> {value.name}</div>
-      <div className="right"></div>
+      <button className="right">
+        <IoBarbell size={20} color="black" />
+      </button>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  min-height: 30px;
-  margin-bottom: 10px;
-  padding: 10px 5px;
-  border-radius: 10px;
+  margin-bottom: 30px;
+  padding: 10px;
+  width: 98%;
+  margin: 0 auto;
+  border-radius: 20px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: space-between;
-  :first-child {
-    margin-top: 20px;
+  align-items: center;
+
+  .left {
+    max-width: 40%;
+  }
+  .middle {
+    width: 60%;
   }
   .right {
-    border-radius: 50%;
+    height: 30px;
     background-color: #fabb73;
-    height: 20px;
-    width: 30px;
+    border-radius: 20px;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+  div {
+    font-size: 600;
+    color: #b8bcc4;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.5rem;
+  }
+  :first-child {
+    margin-top: 20px;
   }
 `;

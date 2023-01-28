@@ -36,7 +36,7 @@ export default function WorkoutPage() {
           <p>Você ainda não tem treinos</p>
         )}
       </div>
-      <div>
+      <div className="exerciseContainer">
         {exercises?.map((value, index) => (
           <Exercise key={index} value={value} />
         ))}
@@ -61,5 +61,10 @@ const Wrapper = styled.div`
     font-size: 1rem;
     margin: 25vh 0;
     text-align: center;
+  }
+  .exerciseContainer {
+    min-height: 65vh;
+    display: flex;
+    flex-direction: column;
   }
 `;
