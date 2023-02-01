@@ -17,7 +17,9 @@ export default function Signin() {
   const submitForm = (e) => {
     e.preventDefault();
     if (form.confirm_password !== form.password) {
-      toast("Passwords doesn't match");
+      toast.error("Passwords doesn't match", {
+        position: "bottom-center",
+      });
     }
   };
   return (
