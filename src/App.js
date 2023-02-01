@@ -1,9 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { UserProvider } from "./contexts/UserContext";
 
 import Enroll from "./pages/Auth/Enroll";
 import Login from "./pages/Auth/Login";
-import Signin from "./pages/Auth/SignIn";
+import SignUpPage from "./pages/Auth/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Dashboard/Home/HomePage";
 import SettingsPage from "./pages/Dashboard/Settings/SettingsPage";
@@ -15,32 +16,39 @@ export default function App() {
   return (
     <>
       <ToastContainer />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<WelcomePage />} />
-          <Route path="/auth" element={<Login />} />
-          <Route path="/auth/signin" element={<Signin />} />
-          <Route path="/enroll" element={<Enroll />} />
-          <Route path="/dashboard" element={<Dashboard />}>
-            <Route path="workout" element={<WorkoutPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-            <Route path="home" element={<Home />} />
-            <Route index path="*" element={<WorkoutPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="/auth" element={<Login />} />
+            <Route path="/auth/signin" element={<SignUpPage />} />
+            <Route path="/enroll" element={<Enroll />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRouteGuard>
+                  <Dashboard />
+                </ProtectedRouteGuard>
+              }
+            >
+              <Route path="workout" element={<WorkoutPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="home" element={<Home />} />
+              <Route index path="*" element={<WorkoutPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </>
   );
 }
 
-// function ProtectedRouteGuard({ children }) {
-//   const token = useToken();
+function ProtectedRouteGuard({ children }) {
+  const token = useToken();
 
-//   if (!token) {
-//     return <Navigate to="/sign-in" />;
-//   }
+  if (!token) {
+    return <Navigate to="/sign-in" />;
+  }
 
-//   return <>
-//     {children}
-//   </>;
-// }
+  return <>{children}</>;
+}

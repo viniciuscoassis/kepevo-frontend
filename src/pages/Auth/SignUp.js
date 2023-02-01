@@ -1,25 +1,37 @@
-import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import H1Title from "../../components/aux/h1";
 import PWithNav from "../../components/aux/pWithNav";
 import Header from "../../components/Dashboard/Header";
 import DefaultButton from "../../components/DefaultButton";
+import UserContext from "../../contexts/UserContext";
+import useSignUp from "../../hooks/api/useSignUp";
 
-export default function Signin() {
+export default function SignUpPage() {
   const baseForm = { email: "", password: "", confirm_password: "" };
 
   const [form, setForm] = useState(baseForm);
+  const { signUp } = useSignUp();
+  const navigate = useNavigate();
 
   const handleForm = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     if (form.confirm_password !== form.password) {
       toast.error("Passwords doesn't match", {
         position: "bottom-center",
       });
+    }
+    try {
+      await signUp(form);
+      toast("Conta criada com sucesso!, Logue-se");
+      navigate("/auth/signin");
+    } catch (err) {
+      toast.error("Something went wrong on your sign up");
     }
   };
   return (

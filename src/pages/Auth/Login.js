@@ -1,21 +1,32 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import H1Title from "../../components/aux/h1";
 import PWithNav from "../../components/aux/pWithNav";
 import Header from "../../components/Dashboard/Header";
 import DefaultButton from "../../components/DefaultButton";
+import UserContext from "../../contexts/UserContext";
+import useLogin from "../../hooks/api/useLogin";
 
 export default function Login() {
   const baseForm = { email: "", password: "" };
-
   const [form, setForm] = useState(baseForm);
+  const { login } = useLogin();
+  const { setUserData } = useContext(UserContext);
 
   const handleForm = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
-    console.log(form);
+
+    try {
+      const userInfo = await login(form);
+      await setUserData(userInfo);
+      toast("Login realizado cm sucesso!");
+    } catch (err) {
+      toast.error("Algo deu errado com seu login...");
+    }
   };
   return (
     <Wrapper>
