@@ -14,7 +14,6 @@ export default function WorkoutPage() {
   const fetchWorkout = async () => {
     const workouts = await getgetWorkOut();
     setWorkouts(workouts);
-    console.log(workouts);
   };
 
   const handleSelection = (e) => {
@@ -36,11 +35,16 @@ export default function WorkoutPage() {
           <p>Você ainda não tem treinos</p>
         )}
       </div>
-      <div className="exerciseContainer">
-        {exercises?.map((value, index) => (
-          <Exercise key={index} value={value} />
-        ))}
-      </div>
+      {exercises.length === 0 ? (
+        " "
+      ) : (
+        <div className="exerciseContainer">
+          {exercises?.map((value, index) => (
+            <Exercise key={index} value={value} />
+          ))}
+        </div>
+      )}
+
       {exercises.length === 0 ? (
         <p className="warning">
           Você ainda não tem exercícios para este treino, adicione!

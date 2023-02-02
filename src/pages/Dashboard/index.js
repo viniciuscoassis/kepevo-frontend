@@ -7,7 +7,7 @@ export default function Dashboard() {
   return (
     <>
       <Wrapper>
-        <Header />
+        <Header marginbottom={"2.5rem"} />
         <Outlet />
         <NavigationBar />
       </Wrapper>

@@ -13,7 +13,7 @@ export default function Login() {
   const baseForm = { email: "", password: "" };
   const [form, setForm] = useState(baseForm);
   const { postLogin, loginLoading } = useLogin();
-  const { userData, setUserData } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleForm = (e) => {
