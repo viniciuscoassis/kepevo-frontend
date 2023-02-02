@@ -2,8 +2,8 @@ import styled from "styled-components";
 import bigLogo from "../../assets/images/semfundo-preto 1.png";
 import H1Title from "../../components/aux/h1";
 import PWithNav from "../../components/aux/pWithNav";
-import DefaultRouteButton from "../../components/RouteButton";
-import DefaultButton from "../../components/RouteButton";
+import DefaultRouteButton from "../../components/Buttons/RouteButton";
+import DefaultButton from "../../components/Buttons/RouteButton";
 
 export default function WelcomePage() {
   return (
@@ -20,7 +20,7 @@ export default function WelcomePage() {
         <p></p>
       </div>
       <div className="low">
-        <DefaultRouteButton route={"/auth/signin"} textColor="black">
+        <DefaultRouteButton route={"/auth/signup"} textColor="black">
           {" "}
           Start
         </DefaultRouteButton>

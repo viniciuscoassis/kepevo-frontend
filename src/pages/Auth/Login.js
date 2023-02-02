@@ -4,15 +4,17 @@ import styled from "styled-components";
 import H1Title from "../../components/aux/h1";
 import PWithNav from "../../components/aux/pWithNav";
 import Header from "../../components/Dashboard/Header";
-import DefaultButton from "../../components/DefaultButton";
+import DefaultButton from "../../components/Buttons/DefaultButton";
 import UserContext from "../../contexts/UserContext";
 import useLogin from "../../hooks/api/useLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const baseForm = { email: "", password: "" };
   const [form, setForm] = useState(baseForm);
-  const { login } = useLogin();
-  const { setUserData } = useContext(UserContext);
+  const { postLogin, loginLoading } = useLogin();
+  const { userData, setUserData } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleForm = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,11 +23,17 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const userInfo = await login(form);
+      const userInfo = await postLogin(form);
+
       await setUserData(userInfo);
-      toast("Login realizado cm sucesso!");
+
+      toast("Login made successfully!");
+
+      navigate("/dashboard");
+      return;
     } catch (err) {
-      toast.error("Algo deu errado com seu login...");
+      toast.error("Something went wrong with your login");
+      console.log(err);
     }
   };
   return (
@@ -37,18 +45,25 @@ export default function Login() {
         </div>
         <div className="middle">
           <Form onSubmit={submitForm}>
-            <input onChange={handleForm} placeholder="email" name="email" />
+            <input
+              onChange={handleForm}
+              placeholder="email"
+              name="email"
+              disabled={loginLoading}
+            />
             <input
               onChange={handleForm}
               placeholder="password"
               name="password"
+              type="password"
+              disabled={loginLoading}
             />
 
-            <DefaultButton>Login</DefaultButton>
+            <DefaultButton disabled={loginLoading}>Login</DefaultButton>
           </Form>
         </div>
         <div className="low">
-          <PWithNav label="Register" path={"/auth/signin"}>
+          <PWithNav label="Register" path={"/auth/signup"}>
             don't have an account?
           </PWithNav>
         </div>

@@ -1,18 +1,14 @@
 import useAsync from "../useAsync";
 import * as authApi from "../../services/authApi";
 
-export default function useLogin(body) {
-  const token = useToken();
-
+export default function useLogin() {
   const {
-    data: login,
     loading: loginLoading,
     error: loginError,
     act: postLogin,
-  } = useAsync(() => authApi.login(body, token));
+  } = useAsync(authApi.login, false);
 
   return {
-    login,
     loginLoading,
     loginError,
     postLogin,

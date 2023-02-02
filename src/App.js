@@ -1,6 +1,7 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { UserProvider } from "./contexts/UserContext";
+import useToken from "./hooks/useToken";
 
 import Enroll from "./pages/Auth/Enroll";
 import Login from "./pages/Auth/Login";
@@ -21,7 +22,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             <Route path="/auth" element={<Login />} />
-            <Route path="/auth/signin" element={<SignUpPage />} />
+            <Route path="/auth/signup" element={<SignUpPage />} />
             <Route path="/enroll" element={<Enroll />} />
             <Route
               path="/dashboard"
@@ -47,7 +48,7 @@ function ProtectedRouteGuard({ children }) {
   const token = useToken();
 
   if (!token) {
-    return <Navigate to="/sign-in" />;
+    return <Navigate to="/" />;
   }
 
   return <>{children}</>;

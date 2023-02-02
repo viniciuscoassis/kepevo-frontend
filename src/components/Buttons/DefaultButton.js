@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function DefaultButton({ children, textColor }) {
-  return <Wrapper textColor={textColor}>{children}</Wrapper>;
+export default function DefaultButton({ children, textColor, type, disabled }) {
+  return (
+    <Wrapper disabled={disabled} type={type} textColor={textColor}>
+      {children}
+    </Wrapper>
+  );
 }
 
 const Wrapper = styled.button`

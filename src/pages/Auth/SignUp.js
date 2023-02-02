@@ -1,21 +1,20 @@
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import H1Title from "../../components/aux/h1";
 import PWithNav from "../../components/aux/pWithNav";
 import Header from "../../components/Dashboard/Header";
-import DefaultButton from "../../components/DefaultButton";
-import UserContext from "../../contexts/UserContext";
+import DefaultButton from "../../components/Buttons/DefaultButton";
 import useSignUp from "../../hooks/api/useSignUp";
 
 export default function SignUpPage() {
   const baseForm = { email: "", password: "", confirm_password: "" };
 
   const [form, setForm] = useState(baseForm);
-  const { signUp } = useSignUp();
-  const navigate = useNavigate();
 
+  const { signUp, signUpLoading } = useSignUp();
+  const navigate = useNavigate();
   const handleForm = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -25,13 +24,23 @@ export default function SignUpPage() {
       toast.error("Passwords doesn't match", {
         position: "bottom-center",
       });
+      return;
     }
+
     try {
-      await signUp(form);
+      await signUp({ email: form.email, password: form.password });
       toast("Conta criada com sucesso!, Logue-se");
-      navigate("/auth/signin");
+      navigate("/auth");
     } catch (err) {
-      toast.error("Something went wrong on your sign up");
+      if (err.response.status === 409) {
+        toast.error("This email is already registered", {
+          position: "bottom-center",
+        });
+        return;
+      }
+      toast.error("Something went wrong on your sign up", {
+        position: "bottom-center",
+      });
     }
   };
   return (
@@ -48,13 +57,17 @@ export default function SignUpPage() {
               onChange={handleForm}
               placeholder="password"
               name="password"
+              type="password"
+              disabled={signUpLoading}
             />
             <input
               onChange={handleForm}
               placeholder="confirm your password"
               name="confirm_password"
+              type="password"
+              disabled={signUpLoading}
             />
-            <DefaultButton>Create account</DefaultButton>
+            <DefaultButton type="submit">Create account</DefaultButton>
           </Form>
         </div>
         <div className="low">

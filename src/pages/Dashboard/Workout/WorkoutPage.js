@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import DefaultButton from "../../../components/RouteButton";
+import DefaultButton from "../../../components/Buttons/RouteButton";
 import useGetWorkout from "../../../hooks/api/useGetWorkout";
 import Select from "react-select";
 import Exercise from "../../../components/Dashboard/Workout/ExerciseDisplay";
