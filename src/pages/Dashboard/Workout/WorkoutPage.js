@@ -5,11 +5,14 @@ import useGetWorkout from "../../../hooks/api/useGetWorkout";
 import Select from "react-select";
 import Exercise from "../../../components/Dashboard/Workout/ExerciseDisplay";
 import * as data from "../../../assets/data/usefulData";
+import OnclickButton from "../../../components/Buttons/OnClickButton";
+import AddExercise from "../../../components/Dashboard/Workout/AddExercise";
 
 export default function WorkoutPage() {
   const { getgetWorkOut } = useGetWorkout();
   const [workouts, setWorkouts] = useState();
   const [exercises, setExercises] = useState([]);
+  const [isAdding, setIsAdding] = useState(false);
 
   const fetchWorkout = async () => {
     const workouts = await getgetWorkOut();
@@ -24,17 +27,24 @@ export default function WorkoutPage() {
 
   useEffect(() => {
     fetchWorkout();
-  }, []);
+    console.log(isAdding);
+  }, [isAdding]);
 
   return (
     <Wrapper>
-      <div>
+      <div className="select">
         {workouts ? (
           <Select options={data.options} onChange={handleSelection} />
         ) : (
           <p>Você ainda não tem treinos</p>
         )}
       </div>
+      {isAdding ? (
+        <AddExercise setIsAdding={setIsAdding} isAdding={isAdding} />
+      ) : (
+        ""
+      )}
+
       {exercises.length === 0 ? (
         " "
       ) : (
@@ -46,21 +56,31 @@ export default function WorkoutPage() {
       )}
 
       {exercises.length === 0 ? (
-        <p className="warning">
-          Você ainda não tem exercícios para este treino, adicione!
-        </p>
+        isAdding ? (
+          ""
+        ) : (
+          <>
+            <p className="warning">
+              Você ainda não tem exercícios para este treino, adicione!
+            </p>
+            <OnclickButton setIsAdding={setIsAdding} isAdding={isAdding}>
+              Add Exercise
+            </OnclickButton>
+          </>
+        )
       ) : (
         ""
       )}
-      <DefaultButton>Add Exercise</DefaultButton>
     </Wrapper>
   );
 }
-
 const Wrapper = styled.div`
   min-height: 75vh;
   max-height: 75vh;
   overflow-y: scroll;
+  .select {
+    margin-bottom: 1rem;
+  }
   .warning {
     font-size: 1rem;
     margin: 25vh 0;
