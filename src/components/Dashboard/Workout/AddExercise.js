@@ -1,7 +1,23 @@
+import { useState } from "react";
 import styled from "styled-components";
 import DefaultButton from "../../Buttons/DefaultButton";
+import OnclickButton from "../../Buttons/OnClickButton";
 
 export default function AddExercise({ setIsAdding, isAdding }) {
+  const emptyBody = {
+    muscle: "",
+    name: "",
+  };
+  const [form, setForm] = useState(emptyBody);
+
+  const handleSelect = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
   return (
     <>
       <Wrapper>
@@ -11,21 +27,25 @@ export default function AddExercise({ setIsAdding, isAdding }) {
         </div>
         <div className="divider"></div>
         <div className="middle">
-          <div className="input first">
+          <div className="field first">
             <h3>* MUSCLE</h3>
-            <select>
+            <select name="muscle" onChange={handleSelect}>
               <option>chest</option>
+              <option>back</option>
+              <option>shoulders</option>
+              <option>biceps</option>
+              <option>triceps</option>
             </select>
           </div>
-          <div className="input second ">
+          <div className="field second ">
             <h3>* Exercise</h3>
-            <select>
-              <option>chest</option>
-            </select>
+            <input name="name" onChange={handleSelect}></input>
           </div>
         </div>
         <div className="low">
-          <DefaultButton></DefaultButton>
+          <OnclickButton submit={submit} textColor={"white"}>
+            add new exercise
+          </OnclickButton>
         </div>
       </Wrapper>
       <X className="x" onClick={() => setIsAdding(!isAdding)}>
@@ -69,9 +89,46 @@ const Wrapper = styled.div`
   }
   .middle {
     color: #b8bcc4;
-    .input {
+    margin-bottom: 1rem;
+    .field {
+      input {
+        width: 100%;
+        height: 2rem;
+        text-transform: uppercase;
+        padding: 0 7px;
+        border-radius: 10px;
+        border: 2px solid #b8bcc4;
+        font-family: "Lexend Deca", sans-serif;
+        color: #b8bcc4;
+        :-webkit-autofill,
+        :-webkit-autofill:hover,
+        :-webkit-autofill:focus,
+        :-webkit-autofill:active {
+          -webkit-box-shadow: 0 0 0 30px white inset !important;
+          :focus {
+            color: #b8bcc4;
+          }
+        }
+      }
+      select {
+        width: 100%;
+        height: 2rem;
+        padding-left: 5px;
+        text-transform: uppercase;
+        border-radius: 10px;
+        background-color: white;
+        font-family: "Lexend Deca", sans-serif;
+        color: #b8bcc4;
+        border: 2px solid #b8bcc4;
+
+        option {
+          text-transform: uppercase;
+        }
+      }
       h3 {
-        font-size: 10px;
+        text-transform: uppercase;
+        margin: 0.6rem 0;
+        font-size: 0.7rem;
       }
     }
   }

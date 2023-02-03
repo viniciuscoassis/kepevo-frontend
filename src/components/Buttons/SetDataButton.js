@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import DefaultButton from "./DefaultButton";
 
-export default function OnclickButton({ children, textColor, submit }) {
+export default function SetDataButton({ children, textColor, set, data }) {
   return (
-    <Wrapper onClick={submit}>
+    <Wrapper onClick={() => set(data)}>
       <DefaultButton textColor={textColor}>{children}</DefaultButton>
     </Wrapper>
   );

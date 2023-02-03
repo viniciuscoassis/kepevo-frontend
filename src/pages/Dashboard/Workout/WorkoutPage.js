@@ -5,7 +5,7 @@ import useGetWorkout from "../../../hooks/api/useGetWorkout";
 import Select from "react-select";
 import Exercise from "../../../components/Dashboard/Workout/ExerciseDisplay";
 import * as data from "../../../assets/data/usefulData";
-import OnclickButton from "../../../components/Buttons/OnClickButton";
+import OnclickButton from "../../../components/Buttons/SetDataButton";
 import AddExercise from "../../../components/Dashboard/Workout/AddExercise";
 
 export default function WorkoutPage() {
@@ -27,8 +27,7 @@ export default function WorkoutPage() {
 
   useEffect(() => {
     fetchWorkout();
-    console.log(isAdding);
-  }, [isAdding]);
+  }, []);
 
   return (
     <Wrapper>
@@ -63,7 +62,7 @@ export default function WorkoutPage() {
             <p className="warning">
               Você ainda não tem exercícios para este treino, adicione!
             </p>
-            <OnclickButton setIsAdding={setIsAdding} isAdding={isAdding}>
+            <OnclickButton set={setIsAdding} data={!isAdding}>
               Add Exercise
             </OnclickButton>
           </>
