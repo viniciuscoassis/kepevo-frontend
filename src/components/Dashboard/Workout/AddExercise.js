@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import useGetMuscles from "../../../hooks/api/useGetMuscles";
 import OnclickButton from "../../Buttons/OnClickButton";
@@ -10,7 +11,7 @@ export default function AddExercise({
   workoutSelected,
 }) {
   const emptyBody = {
-    muscle: muscleGroups[0].name,
+    muscleGroupId: muscleGroups[0].id,
     name: "",
   };
   const [form, setForm] = useState(emptyBody);
@@ -21,22 +22,29 @@ export default function AddExercise({
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(form);
+    const body = { ...form, workoutId: workoutSelected.id };
+    if (!body.workoutId) {
+      toast.warn("Please select workout first");
+      return;
+    }
+    console.log(body);
   };
   return (
     <>
       <Wrapper>
         <div className="high">
           <h1>new exercise</h1>
-          <h2>{workoutSelected}</h2>
+          <h2>{workoutSelected.title}</h2>
         </div>
         <div className="divider"></div>
         <div className="middle">
           <div className="field first">
             <h3>* MUSCLE</h3>
-            <select name="muscle" onChange={handleSelect}>
+            <select name="muscleGroupId" onChange={handleSelect}>
               {muscleGroups.map((value, index) => (
-                <option key={index}>{value.name}</option>
+                <option key={index} label={value.name}>
+                  {value.id}
+                </option>
               ))}
             </select>
           </div>

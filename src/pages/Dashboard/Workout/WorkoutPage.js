@@ -8,13 +8,14 @@ import * as data from "../../../assets/data/usefulData";
 import OnclickButton from "../../../components/Buttons/SetDataButton";
 import AddExercise from "../../../components/Dashboard/Workout/AddExercise";
 import useGetMuscles from "../../../hooks/api/useGetMuscles";
+import SetDataButton from "../../../components/Buttons/SetDataButton";
 
 export default function WorkoutPage() {
   const { getgetWorkOut } = useGetWorkout();
   const [workouts, setWorkouts] = useState();
   const [exercises, setExercises] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [workoutSelected, setWorkoutSelected] = useState();
+  const [workoutSelected, setWorkoutSelected] = useState({});
   const { getgetMuscles } = useGetMuscles();
   const [muscleGroups, setMuscleGroups] = useState([]);
 
@@ -29,12 +30,13 @@ export default function WorkoutPage() {
     workouts.map((value) =>
       value.title === e.value ? setExercises(value.WorkoutExercise) : ""
     );
-    setWorkoutSelected(e.value);
+    workouts.map((value) =>
+      value.title === e.value ? setWorkoutSelected(value) : ""
+    );
   };
 
   useEffect(() => {
     fetchWorkout();
-    console.log(muscleGroups);
   }, [isAdding]);
 
   return (
@@ -75,9 +77,9 @@ export default function WorkoutPage() {
             <p className="warning">
               Você ainda não tem exercícios para este treino, adicione!
             </p>
-            <OnclickButton set={setIsAdding} data={!isAdding}>
+            <SetDataButton set={setIsAdding} data={!isAdding}>
               Add Exercise
-            </OnclickButton>
+            </SetDataButton>
           </>
         )
       ) : (
