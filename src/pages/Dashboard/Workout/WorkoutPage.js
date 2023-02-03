@@ -7,27 +7,35 @@ import Exercise from "../../../components/Dashboard/Workout/ExerciseDisplay";
 import * as data from "../../../assets/data/usefulData";
 import OnclickButton from "../../../components/Buttons/SetDataButton";
 import AddExercise from "../../../components/Dashboard/Workout/AddExercise";
+import useGetMuscles from "../../../hooks/api/useGetMuscles";
 
 export default function WorkoutPage() {
   const { getgetWorkOut } = useGetWorkout();
   const [workouts, setWorkouts] = useState();
   const [exercises, setExercises] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [workoutSelected, setWorkoutSelected] = useState();
+  const { getgetMuscles } = useGetMuscles();
+  const [muscleGroups, setMuscleGroups] = useState([]);
 
   const fetchWorkout = async () => {
     const workouts = await getgetWorkOut();
     setWorkouts(workouts);
+    const muscles = await getgetMuscles();
+    setMuscleGroups(muscles);
   };
 
   const handleSelection = (e) => {
     workouts.map((value) =>
       value.title === e.value ? setExercises(value.WorkoutExercise) : ""
     );
+    setWorkoutSelected(e.value);
   };
 
   useEffect(() => {
     fetchWorkout();
-  }, []);
+    console.log(muscleGroups);
+  }, [isAdding]);
 
   return (
     <Wrapper>
@@ -39,7 +47,12 @@ export default function WorkoutPage() {
         )}
       </div>
       {isAdding ? (
-        <AddExercise setIsAdding={setIsAdding} isAdding={isAdding} />
+        <AddExercise
+          muscleGroups={muscleGroups}
+          workoutSelected={workoutSelected}
+          setIsAdding={setIsAdding}
+          isAdding={isAdding}
+        />
       ) : (
         ""
       )}

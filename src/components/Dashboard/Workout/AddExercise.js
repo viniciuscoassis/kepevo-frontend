@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import DefaultButton from "../../Buttons/DefaultButton";
+import useGetMuscles from "../../../hooks/api/useGetMuscles";
 import OnclickButton from "../../Buttons/OnClickButton";
 
-export default function AddExercise({ setIsAdding, isAdding }) {
+export default function AddExercise({
+  muscleGroups,
+  setIsAdding,
+  isAdding,
+  workoutSelected,
+}) {
   const emptyBody = {
-    muscle: "",
+    muscle: muscleGroups[0].name,
     name: "",
   };
   const [form, setForm] = useState(emptyBody);
@@ -23,18 +28,16 @@ export default function AddExercise({ setIsAdding, isAdding }) {
       <Wrapper>
         <div className="high">
           <h1>new exercise</h1>
-          <h2>treino A</h2>
+          <h2>{workoutSelected}</h2>
         </div>
         <div className="divider"></div>
         <div className="middle">
           <div className="field first">
             <h3>* MUSCLE</h3>
             <select name="muscle" onChange={handleSelect}>
-              <option>chest</option>
-              <option>back</option>
-              <option>shoulders</option>
-              <option>biceps</option>
-              <option>triceps</option>
+              {muscleGroups.map((value, index) => (
+                <option key={index}>{value.name}</option>
+              ))}
             </select>
           </div>
           <div className="field second ">
@@ -104,7 +107,7 @@ const Wrapper = styled.div`
         :-webkit-autofill:hover,
         :-webkit-autofill:focus,
         :-webkit-autofill:active {
-          -webkit-box-shadow: 0 0 0 30px white inset !important;
+          box-shadow: 0 0 0 30px white inset !important;
           :focus {
             color: #b8bcc4;
           }
