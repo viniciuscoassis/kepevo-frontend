@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Dashboard/Home/HomePage";
 import NotificationPage from "./pages/Dashboard/NotificationsPage";
 import SettingsPage from "./pages/Dashboard/Settings/SettingsPage";
+import WeightHistoryPage from "./pages/Dashboard/Workout/WeightHistoryPage";
 
 import WorkoutPage from "./pages/Dashboard/Workout/WorkoutPage";
 import WelcomePage from "./pages/Welcome/WelcomePage";
@@ -34,6 +35,7 @@ export default function App() {
               }
             >
               <Route path="workout" element={<WorkoutPage />} />
+              <Route path="weightHistory" element={<WeightHistoryPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="home" element={<Home />} />
               <Route path="notifications" element={<NotificationPage />} />
