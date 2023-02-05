@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
-import useGetMuscles from "../../../hooks/api/useGetMuscles";
+import usePostExercise from "../../../hooks/api/usePostExercise";
 import OnclickButton from "../../Buttons/OnClickButton";
 
 export default function AddExercise({
@@ -9,25 +9,35 @@ export default function AddExercise({
   setIsAdding,
   isAdding,
   workoutSelected,
+  setExercises,
+  exercises,
 }) {
   const emptyBody = {
     muscleGroupId: muscleGroups[0].id,
     name: "",
   };
   const [form, setForm] = useState(emptyBody);
+  const { postExercise } = usePostExercise();
 
   const handleSelect = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const body = { ...form, workoutId: workoutSelected.id };
     if (!body.workoutId) {
-      toast.warn("Please select workout first");
+      toast.warning("Please select workout first");
       return;
     }
-    console.log(body);
+    try {
+      await postExercise(body);
+      toast("Exercise created successfully");
+      setExercises({ ...exercises });
+      setTimeout(() => setIsAdding(!isAdding), 1000);
+    } catch (err) {
+      toast.error("Something went wrong when publishing your exercise");
+    }
   };
   return (
     <>

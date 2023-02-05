@@ -37,7 +37,7 @@ export default function WorkoutPage() {
 
   useEffect(() => {
     fetchWorkout();
-  }, [isAdding]);
+  }, [isAdding, exercises]);
 
   return (
     <Wrapper>
@@ -54,19 +54,23 @@ export default function WorkoutPage() {
           workoutSelected={workoutSelected}
           setIsAdding={setIsAdding}
           isAdding={isAdding}
+          setExercises={setExercises}
+          exercises={exercises}
         />
       ) : (
         ""
       )}
 
-      {exercises.length === 0 ? (
+      {exercises?.length === 0 ? (
         " "
       ) : (
-        <div className="exerciseContainer">
-          {exercises?.map((value, index) => (
-            <Exercise key={index} value={value} />
-          ))}
-        </div>
+        <>
+          <div className="exerciseContainer">
+            {exercises?.map((value, index) => (
+              <Exercise key={index} value={value} />
+            ))}
+          </div>
+        </>
       )}
 
       {exercises.length === 0 ? (
@@ -83,7 +87,9 @@ export default function WorkoutPage() {
           </>
         )
       ) : (
-        ""
+        <SetDataButton set={setIsAdding} data={!isAdding}>
+          Add Exercise
+        </SetDataButton>
       )}
     </Wrapper>
   );
@@ -101,8 +107,8 @@ const Wrapper = styled.div`
     text-align: center;
   }
   .exerciseContainer {
-    min-height: 65vh;
     display: flex;
     flex-direction: column;
+    margin-bottom: 2rem;
   }
 `;

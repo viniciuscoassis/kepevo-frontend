@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function Header({ auth, marginbottom }) {
   const navigate = useNavigate();
   const a = "<";
-  const path = auth ? "/" : "dashboard";
+  const path = auth ? "/" : "/dashboard";
   return (
     <Wrapper auth={auth} marginbottom={marginbottom}>
       <div className="left" onClick={() => navigate(path)}>
@@ -17,7 +17,13 @@ export default function Header({ auth, marginbottom }) {
         <img src={logo} alt="logotipo" />{" "}
       </div>
       <div className="right">
-        <HiOutlineBellAlert size={25} visibility={auth ? "hidden" : ""} />{" "}
+        <HiOutlineBellAlert
+          onClick={() => {
+            navigate("/dashboard/notifications");
+          }}
+          size={25}
+          visibility={auth ? "hidden" : ""}
+        />{" "}
       </div>
     </Wrapper>
   );
